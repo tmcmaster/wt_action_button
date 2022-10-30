@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:utils/logging.dart';
+import 'package:wt_action_button/utils/logging.dart';
 
 import 'dependency_checker.dart';
 

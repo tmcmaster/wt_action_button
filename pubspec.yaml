@@ -1,7 +1,8 @@
 name: wt_action_button
-description: A new Flutter package project.
-version: 0.0.1
-homepage: https://github.com/tmcmaster/wt-actions
+description: Define and manage actions within an application.
+publish_to: 'none'
+version: 0.0.2
+homepage: https://github.com/tmcmaster/wt_action_button
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -10,15 +11,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  logger: ^1.1.0
   riverpod: ^2.0.2
-  hooks_riverpod:
-  flutter_hooks:
-  flutter_riverpod:
-  utils:
-    path: ../wt-app-scaffold/packages/utils
+  hooks_riverpod: ^2.0.2
+  flutter_hooks: ^0.18.5+1
+  flutter_riverpod: ^2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
 flutter:
