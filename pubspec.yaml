@@ -1,0 +1,24 @@
+name: wt_action_button
+description: A new Flutter package project.
+version: 0.0.1
+homepage: https://github.com/tmcmaster/wt-actions
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  riverpod: ^2.0.2
+  hooks_riverpod:
+  flutter_hooks:
+  flutter_riverpod:
+  utils:
+    path: ../wt-app-scaffold/packages/utils
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+flutter:
