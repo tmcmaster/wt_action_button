@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wt_action_button/action_definition.dart';
+import 'package:wt_action_button/action_button_definition.dart';
 
 export 'action_button_providers.dart';
 export 'action_button_state.dart';
@@ -12,7 +12,7 @@ class ActionButton extends HookConsumerWidget {
   final VoidCallback? onPressed;
   final Icon icon;
   final bool startStop;
-  final ActionDefinition jobState;
+  final ActionButtonDefinition jobState;
   final String? label;
   final Color? color;
   final Color? background;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:wt_action_button/action_button.dart';
 
-abstract class ActionDefinition {
+abstract class ActionButtonDefinition {
   late StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState> progress;
   late StateNotifierProvider<StateNotifier<bool>, bool> dependencies;
 
@@ -12,7 +12,7 @@ abstract class ActionDefinition {
   final String label;
   final IconData icon;
 
-  ActionDefinition(this.ref, {required this.icon, required this.label}) {
+  ActionButtonDefinition(this.ref, {required this.icon, required this.label}) {
     progress = StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>(
       name: 'actionOneProviders',
       (ref) => ActionButtonStateNotifier(),

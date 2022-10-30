@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:utils/logging.dart';
-import 'package:wt_action_button/action_definition.dart';
+import 'package:wt_action_button/action_button_definition.dart';
 
-class ActionTwo extends ActionDefinition {
+class ActionTwo extends ActionButtonDefinition {
   static final log = logger(ActionTwo, level: Level.debug);
 
   static final provider = Provider(
