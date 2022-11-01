@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_action_button/action_process_indicator.dart';
 import 'package:wt_actions_examples/actions/action_one.dart';
+import 'package:wt_actions_examples/actions/action_three.dart';
 import 'package:wt_actions_examples/actions/action_two.dart';
 
 void main() {
@@ -33,6 +35,7 @@ class MyHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final actionOne = ref.read(ActionOne.provider);
     final actionTwo = ref.read(ActionTwo.provider);
+    final actionThree = ref.read(ActionThree.provider);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -49,6 +52,22 @@ class MyHomePage extends ConsumerWidget {
             actionTwo.component(),
             const SizedBox(height: 10),
             actionOne.component(),
+            const SizedBox(height: 10),
+            actionThree.component(),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 200,
+              child: actionThree.indicator(
+                type: IndicatorType.linear,
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 50,
+              child: actionThree.indicator(
+                type: IndicatorType.circular,
+              ),
+            ),
           ],
         ),
       ),

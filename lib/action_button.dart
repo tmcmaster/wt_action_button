@@ -12,7 +12,7 @@ class ActionButton extends HookConsumerWidget {
   final VoidCallback? onPressed;
   final Icon icon;
   final bool startStop;
-  final ActionButtonDefinition jobState;
+  final ActionButtonDefinition definition;
   final String? label;
   final Color? color;
   final Color? background;
@@ -23,7 +23,7 @@ class ActionButton extends HookConsumerWidget {
     required this.onPressed,
     required this.icon,
     this.startStop = false,
-    required this.jobState,
+    required this.definition,
     this.label,
     this.color,
     this.background,
@@ -33,9 +33,9 @@ class ActionButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final progress = ref.watch(jobState.progress);
-    final bool dependencies = ref.watch(jobState.dependencies);
-    final notifier = ref.read(jobState.progress.notifier);
+    final progress = ref.watch(definition.progress);
+    final bool dependencies = ref.watch(definition.dependencies);
+    final notifier = ref.read(definition.progress.notifier);
     final colorScheme = Theme.of(context).colorScheme;
 
     final action = progress.done && onPressed != null && dependencies

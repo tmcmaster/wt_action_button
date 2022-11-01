@@ -17,6 +17,31 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     state = ActionButtonState(total: total, completed: 0, currentItem: currentItem);
   }
 
+  void runWithFeedback({
+    required int numberOfSteps,
+    required Future<void> Function(Function(String currentItem) feedback) action,
+  }) async {
+    try {
+      start(total: numberOfSteps);
+      await action((currentItem) {
+        next(currentItem: currentItem);
+      });
+      finished();
+    } catch (err) {
+      error(error.toString());
+    }
+  }
+
+  Future<void> run(Function() action) async {
+    try {
+      start(total: 1);
+      await action();
+      finished();
+    } catch (err) {
+      error(error.toString());
+    }
+  }
+
   next({String? currentItem}) {
     if (state.completed + 1 <= state.total) {
       state = ActionButtonState(

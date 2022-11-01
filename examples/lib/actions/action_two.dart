@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:utils/logging.dart';
 import 'package:wt_action_button/action_button_definition.dart';
+import 'package:wt_action_button/utils/logging.dart';
 
 class ActionTwo extends ActionButtonDefinition {
   static final log = logger(ActionTwo, level: Level.debug);
 
   static final provider = Provider(
-    name: 'HarvestListGenerationAction',
+    name: 'Action Two',
     (ref) => ActionTwo(ref),
   );
 
@@ -16,10 +16,10 @@ class ActionTwo extends ActionButtonDefinition {
   @override
   Future<void> execute() async {
     final notifier = ref.read(progress.notifier);
-    notifier.start(total: 1);
-    log.d('Doing Action......');
-    await Future.delayed(const Duration(seconds: 1));
-    log.d('Action Completed.');
-    notifier.finished();
+    notifier.run(() async {
+      log.d('Doing Action Two......');
+      await Future.delayed(const Duration(seconds: 1));
+      log.d('Action Two Completed.');
+    });
   }
 }

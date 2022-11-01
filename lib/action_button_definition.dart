@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:wt_action_button/action_button.dart';
+import 'package:wt_action_button/action_process_indicator.dart';
 
 abstract class ActionButtonDefinition {
   late StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState> progress;
@@ -26,6 +27,15 @@ abstract class ActionButtonDefinition {
     );
   }
 
+  Widget indicator({
+    IndicatorType type = IndicatorType.circular,
+  }) {
+    return ActionProgressIndicator(
+      definition: this,
+      type: type,
+    );
+  }
+
   Widget component({
     String? label,
     IconData? icon,
@@ -41,7 +51,7 @@ abstract class ActionButtonDefinition {
       noLabel: noLabel,
       color: color,
       background: background,
-      jobState: this,
+      definition: this,
       onPressed: () => execute(),
     );
   }
