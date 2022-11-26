@@ -8,10 +8,10 @@ class ActionOne extends ActionButtonDefinition {
 
   static final provider = Provider(
     name: 'Action One',
-    (ref) => ActionOne(ref),
+    (ref) => ActionOne._(ref),
   );
 
-  ActionOne(super.ref)
+  ActionOne._(super.ref)
       : super(
           label: 'Action One',
           icon: Icons.menu,

@@ -13,7 +13,12 @@ abstract class ActionButtonDefinition {
   final String label;
   final IconData icon;
 
-  ActionButtonDefinition(this.ref, {required this.icon, required this.label}) {
+  ActionButtonDefinition(
+    this.ref, {
+    required this.icon,
+    required this.label,
+    List<DependencyChecker> dependencyCheckers = const [],
+  }) {
     progress = StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>(
       name: 'actionOneProviders',
       (ref) => ActionButtonStateNotifier(),
@@ -22,7 +27,7 @@ abstract class ActionButtonDefinition {
       name: 'Action One Progress',
       (ref) => DependenciesNotifier(
         ref: ref,
-        dependencies: [],
+        dependencies: dependencyCheckers,
       ),
     );
   }

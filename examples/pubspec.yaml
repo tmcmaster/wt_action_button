@@ -12,8 +12,6 @@ dependencies:
   flutter_riverpod:
   wt_action_button:
     path: ..
-  utils:
-    path: ../../wt-app-scaffold/packages/utils
 
 dev_dependencies:
   flutter_test:
