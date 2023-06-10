@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button_definition.dart';
-import 'package:wt_action_button/utils/logging.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 class ActionThree extends ActionButtonDefinition {
   static final log = logger(ActionThree, level: Level.debug);
@@ -19,7 +19,7 @@ class ActionThree extends ActionButtonDefinition {
     final notifier = ref.read(progress.notifier);
     notifier.runWithFeedback(
       numberOfSteps: numberOfSteps,
-      action: (Function(String currentItem) feedback) async {
+      action: (feedback) async {
         log.d('Doing Action Three......');
         for (var i in List.generate(numberOfSteps, (i) => i)) {
           feedback('Current item: ${i + 1}');

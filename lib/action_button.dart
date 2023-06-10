@@ -10,6 +10,7 @@ export 'dependency_checker.dart';
 
 class ActionButton extends HookConsumerWidget {
   final VoidCallback? onPressed;
+  final void Function(String error)? onError;
   final Icon icon;
   final bool startStop;
   final ActionButtonDefinition definition;
@@ -21,6 +22,7 @@ class ActionButton extends HookConsumerWidget {
   const ActionButton({
     super.key,
     required this.onPressed,
+    this.onError,
     required this.icon,
     this.startStop = false,
     required this.definition,
@@ -37,62 +39,143 @@ class ActionButton extends HookConsumerWidget {
     final bool dependencies = ref.watch(definition.dependencies);
     final notifier = ref.read(definition.progress.notifier);
     final colorScheme = Theme.of(context).colorScheme;
-
     final action = progress.done && onPressed != null && dependencies
         ? () {
             try {
               if (startStop) notifier.finished();
               onPressed!.call();
             } catch (error) {
-              // TODO: need to review what to doo with error
-              rethrow;
+              onError?.call(error.toString());
             } finally {
               if (startStop) notifier.start(total: 1);
             }
           }
         : null;
-    return label != null && !noLabel
-        ? ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              foregroundColor: color ?? colorScheme.onPrimary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              elevation: 4,
-              backgroundColor: background ?? colorScheme.primary,
-            ),
-            onPressed: action,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  size: 15,
-                  icon.icon,
-                  color: color ?? colorScheme.onPrimary,
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                Text(
-                  label ?? '',
-                  style: TextStyle(color: color ?? colorScheme.onPrimary),
-                ),
-              ],
-            ),
-          )
+
+    return noLabel && !floating
+        ? _IconButton(
+            color: color, colorScheme: colorScheme, icon: icon, action: action)
         : floating
-            ? FloatingActionButton(
-                enableFeedback: true,
-                backgroundColor: action == null ? Colors.grey.shade300 : background ?? colorScheme.primary,
-                foregroundColor: action == null ? Colors.grey.shade700 : color ?? colorScheme.onPrimary,
-                onPressed: action,
-                child: Icon(icon.icon),
-              )
-            : IconButton(
-                color: color ?? colorScheme.onPrimary,
+            ? _FloatingActionButton(
+                action: action,
+                background: background,
+                colorScheme: colorScheme,
+                color: color,
+                icon: icon)
+            : _ElevatedButton(
+                color: color,
+                colorScheme: colorScheme,
+                background: background,
+                action: action,
                 icon: icon,
-                enableFeedback: true,
-                onPressed: action,
-              );
+                label: label);
+  }
+}
+
+class _IconButton extends StatelessWidget {
+  const _IconButton({
+    super.key,
+    required this.color,
+    required this.colorScheme,
+    required this.icon,
+    required this.action,
+  });
+
+  final Color? color;
+  final ColorScheme colorScheme;
+  final Icon icon;
+  final Null Function()? action;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      color: color ?? colorScheme.onPrimary,
+      icon: icon,
+      enableFeedback: true,
+      onPressed: action,
+    );
+  }
+}
+
+class _FloatingActionButton extends StatelessWidget {
+  const _FloatingActionButton({
+    super.key,
+    required this.action,
+    required this.background,
+    required this.colorScheme,
+    required this.color,
+    required this.icon,
+  });
+
+  final Null Function()? action;
+  final Color? background;
+  final ColorScheme colorScheme;
+  final Color? color;
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      enableFeedback: true,
+      backgroundColor: action == null
+          ? Colors.grey.shade300
+          : background ?? colorScheme.primary,
+      foregroundColor: action == null
+          ? Colors.grey.shade700
+          : color ?? colorScheme.onPrimary,
+      onPressed: action,
+      child: Icon(icon.icon),
+    );
+  }
+}
+
+class _ElevatedButton extends StatelessWidget {
+  const _ElevatedButton({
+    super.key,
+    required this.color,
+    required this.colorScheme,
+    required this.background,
+    required this.action,
+    required this.icon,
+    required this.label,
+  });
+
+  final Color? color;
+  final ColorScheme colorScheme;
+  final Color? background;
+  final Null Function()? action;
+  final Icon icon;
+  final String? label;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: color ?? colorScheme.onPrimary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        elevation: 4,
+        backgroundColor: background ?? colorScheme.primary,
+      ),
+      onPressed: action,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            size: 15,
+            icon.icon,
+            color: color ?? colorScheme.onPrimary,
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          Text(
+            label ?? '',
+            style: TextStyle(color: color ?? colorScheme.onPrimary),
+          ),
+        ],
+      ),
+    );
   }
 }

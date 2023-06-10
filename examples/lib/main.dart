@@ -55,6 +55,8 @@ class MyHomePage extends ConsumerWidget {
             const SizedBox(height: 10),
             actionThree.component(),
             const SizedBox(height: 10),
+            actionThree.component(noLabel: true, color: Colors.amber),
+            const SizedBox(height: 10),
             SizedBox(
               width: 200,
               child: actionThree.indicator(
@@ -74,7 +76,7 @@ class MyHomePage extends ConsumerWidget {
       floatingActionButton: actionTwo.component(
         floating: true,
         noLabel: true,
-        color: Colors.red,
+        color: Colors.blue,
         background: Colors.yellow,
       ),
     );

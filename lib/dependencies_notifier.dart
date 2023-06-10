@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wt_action_button/utils/logging.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 import 'dependency_checker.dart';
 
@@ -15,13 +15,16 @@ class DependenciesNotifier extends StateNotifier<bool> {
     Set<String> uniqueProviderNames = {};
     for (var checker in dependencies) {
       if (checker.dependency.name == null) {
-        throw Exception('Providers must have a name: ${checker.dependency.runtimeType}');
+        throw Exception(
+            'Providers must have a name: ${checker.dependency.runtimeType}');
       }
       if (uniqueProviderNames.contains(checker.dependency.name)) {
-        throw Exception('Providers must have a unique name: ${checker.dependency.runtimeType}');
+        throw Exception(
+            'Providers must have a unique name: ${checker.dependency.runtimeType}');
       }
 
-      removeListeners.add(ref.listen<dynamic>(checker.dependency, (previous, next) {
+      removeListeners
+          .add(ref.listen<dynamic>(checker.dependency, (previous, next) {
         String providerName = checker.dependency.name ?? 'should not happen';
         available[providerName] = checker.check(next);
         _recheck();
@@ -43,7 +46,8 @@ class DependenciesNotifier extends StateNotifier<bool> {
   }
 
   void _recheck() {
-    final newState = available.values.fold<bool>(true, (prev, next) => prev && next);
+    final newState =
+        available.values.fold<bool>(true, (prev, next) => prev && next);
     if (state != newState) state = newState;
   }
 }

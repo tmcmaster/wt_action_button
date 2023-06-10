@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:wt_action_button/action_button.dart';
 import 'package:wt_action_button/action_process_indicator.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 abstract class ActionButtonDefinition {
-  late StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState> progress;
+  late StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>
+      progress;
   late StateNotifierProvider<StateNotifier<bool>, bool> dependencies;
 
   final Ref ref;
@@ -19,7 +21,8 @@ abstract class ActionButtonDefinition {
     required this.label,
     List<DependencyChecker> dependencyCheckers = const [],
   }) {
-    progress = StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>(
+    progress =
+        StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>(
       name: 'actionOneProviders',
       (ref) => ActionButtonStateNotifier(),
     );
@@ -58,6 +61,9 @@ abstract class ActionButtonDefinition {
       background: background,
       definition: this,
       onPressed: () => execute(),
+      onError: (error) {
+        ref.read(UserLog.provider).error(error);
+      },
     );
   }
 

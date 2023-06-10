@@ -11,15 +11,17 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
         ));
 
   start({
-    required int total,
+    int total = 1,
     String currentItem = '',
   }) {
-    state = ActionButtonState(total: total, completed: 0, currentItem: currentItem);
+    state =
+        ActionButtonState(total: total, completed: 0, currentItem: currentItem);
   }
 
   void runWithFeedback({
     required int numberOfSteps,
-    required Future<void> Function(Function(String currentItem) feedback) action,
+    required Future<void> Function(Function(String currentItem) feedback)
+        action,
   }) async {
     try {
       start(total: numberOfSteps);
@@ -34,7 +36,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
 
   Future<void> run(Function() action) async {
     try {
-      start(total: 1);
+      start();
       await action();
       finished();
     } catch (err) {

@@ -4,21 +4,58 @@ This component uses Riverpod to make actions available throughout the applicatio
 manages the state of the running process, as well as stopping the action from being run
 multiple times in parallel.
 
-## Example of an action
+## Action performed with no feedback
 
-This is an example of creating an ActionDefinition, which encapsulates that action being done,
-how it is triggered, and disabling the button while the action is performed.
+This action is run by the notifier, without the action giving feedback to the progress.
+
 
 ```dart
-class ActionOne extends ActionDefinition {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_action_button/action_button_definition.dart';
+import 'package:wt_logging/wt_logging.dart';
+
+class ActionTwo extends ActionButtonDefinition {
+  static final log = logger(ActionTwo, level: Level.debug);
+
+  static final provider = Provider(
+    name: 'Action Two',
+    (ref) => ActionTwo(ref),
+  );
+
+  ActionTwo(super.ref) : super(label: 'Action Two', icon: Icons.start);
+
+  @override
+  Future<void> execute() async {
+    final notifier = ref.read(progress.notifier);
+    notifier.run(() async {
+      log.d('Doing Action Two......');
+      await Future.delayed(const Duration(seconds: 1));
+      log.d('Action Two Completed.');
+    });
+  }
+}
+```
+
+## Action performed manually informing the notifier
+
+Action is performed and manages informing the notifier when the action starts and finishes.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_action_button/action_button_definition.dart';
+import 'package:wt_logging/wt_logging.dart';
+
+class ActionOne extends ActionButtonDefinition {
   static final log = logger(ActionOne, level: Level.debug);
 
   static final provider = Provider(
     name: 'Action One',
-    (ref) => ActionOne(ref),
+    (ref) => ActionOne._(ref),
   );
 
-  ActionOne(super.ref)
+  ActionOne._(super.ref)
       : super(
           label: 'Action One',
           icon: Icons.menu,
@@ -27,11 +64,57 @@ class ActionOne extends ActionDefinition {
   @override
   Future<void> execute() async {
     final notifier = ref.read(progress.notifier);
-    notifier.start(total: 1);
-    log.d('Doing Action......');
-    await Future.delayed(const Duration(seconds: 5));
-    log.d('Action Completed.');
-    notifier.finished();
+    notifier.start();
+    log.d('Doing Action One......');
+    for (int i = 0; i < 10; i++) {
+      await Future.delayed(const Duration(seconds: 1));
+      if (i % 5 == 0) {
+        log.d('Action one Completed.');
+        notifier.finished();
+        break;
+      }
+    }
+  }
+}
+```
+
+## Action performed that gives progress feedback
+
+This is an example of creating an ActionButtonDefinition, which encapsulates that action being done,
+how it is triggered, and disabling the button while the action is performed. During the execution,
+the ActionButtonDefinition gives feedback as to the progress of the action being performed,
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_action_button/action_button_definition.dart';
+import 'package:wt_logging/wt_logging.dart';
+
+class ActionThree extends ActionButtonDefinition {
+  static final log = logger(ActionThree, level: Level.debug);
+
+  static final provider = Provider(
+    name: 'Action Three',
+    (ref) => ActionThree(ref),
+  );
+
+  ActionThree(super.ref) : super(label: 'Action Three', icon: Icons.start);
+
+  @override
+  Future<void> execute() async {
+    const numberOfSteps = 10;
+    final notifier = ref.read(progress.notifier);
+    notifier.runWithFeedback(
+      numberOfSteps: numberOfSteps,
+      action: (feedback) async {
+        log.d('Doing Action Three......');
+        for (var i in List.generate(numberOfSteps, (i) => i)) {
+          feedback('Current item: ${i + 1}');
+          await Future.delayed(const Duration(seconds: 1));
+        }
+        log.d('Action Three Completed.');
+      },
+    );
   }
 }
 ```
@@ -61,7 +144,20 @@ the component is disabled until the action completes.
             const SizedBox(height: 10),
             actionTwo.component(),
             const SizedBox(height: 10),
-            actionOne.component(),
+            actionThree.component(),
+            SizedBox(
+              width: 200,
+              child: actionThree.indicator(
+                type: IndicatorType.linear,
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 50,
+              child: actionThree.indicator(
+                type: IndicatorType.circular,
+              ),
+            ),
           ],
         ),
       ),

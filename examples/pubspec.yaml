@@ -12,6 +12,9 @@ dependencies:
   flutter_riverpod:
   wt_action_button:
     path: ..
+  wt_logging:
+    git:
+      url: git@github.com:tmcmaster/wt_logging.git
 
 dev_dependencies:
   flutter_test:
