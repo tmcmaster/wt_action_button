@@ -30,7 +30,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       });
       finished();
     } catch (err) {
-      error(error.toString());
+      error(err.toString());
     }
   }
 
@@ -40,7 +40,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       await action();
       finished();
     } catch (err) {
-      error(error.toString());
+      error(err.toString());
     }
   }
 
