@@ -11,7 +11,11 @@ class ActionThree extends ActionButtonDefinition {
     (ref) => ActionThree(ref),
   );
 
-  ActionThree(super.ref) : super(label: 'Action Three', icon: Icons.start);
+  ActionThree(super.ref)
+      : super(
+          label: 'Action Three',
+          icon: Icons.start,
+        );
 
   @override
   Future<void> execute() async {

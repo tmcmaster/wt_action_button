@@ -11,7 +11,11 @@ class ActionTwo extends ActionButtonDefinition {
     (ref) => ActionTwo(ref),
   );
 
-  ActionTwo(super.ref) : super(label: 'Action Two', icon: Icons.start);
+  ActionTwo(super.ref)
+      : super(
+          label: 'Action Two',
+          icon: Icons.start,
+        );
 
   @override
   Future<void> execute() async {
