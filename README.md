@@ -1,4 +1,4 @@
-# wt_action-button
+# wt_action_button
 
 This component uses Riverpod to make actions available throughout the application, and
 manages the state of the running process, as well as stopping the action from being run
@@ -126,30 +126,36 @@ class ActionThree extends ActionButtonDefinition {
 
 ## Example of using an action
 
-The following is an example of using 2 actions, creating multiple components to trigger that action.
+The following is an example of using 3 actions, creating multiple components to trigger that action.
 The components can be individually configured, and when an action is trigger, any components tied to
 the component is disabled until the action completes.
 
 ```dart
+class DemoPage extends ConsumerWidget {
+  const DemoPage({super.key});
+
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final actionOne = ref.read(ActionOne.provider);
     final actionTwo = ref.read(ActionTwo.provider);
+    final actionThree = ref.read(ActionThree.provider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text('WT Action Button Demo'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             actionOne.component(
-              background: Colors.purple,
-              color: Colors.yellow,
+              background: Colors.red,
+              color: Colors.white,
             ),
             const SizedBox(height: 10),
             actionTwo.component(),
             const SizedBox(height: 10),
             actionThree.component(),
+            const SizedBox(height: 10),
             SizedBox(
               width: 200,
               child: actionThree.indicator(
@@ -163,6 +169,8 @@ the component is disabled until the action completes.
                 type: IndicatorType.circular,
               ),
             ),
+            const SizedBox(height: 10),
+            actionOne.component(),
           ],
         ),
       ),
@@ -172,6 +180,21 @@ the component is disabled until the action completes.
         color: Colors.red,
         background: Colors.yellow,
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              actionOne.component(noLabel: true),
+              actionTwo.component(noLabel: true),
+              actionThree.component(noLabel: true),
+            ],
+          ),
+        ),
+      ),
     );
   }
+}
 ```
