@@ -14,7 +14,7 @@ class ActionThree extends ActionButtonDefinition {
   ActionThree(super.ref)
       : super(
           label: 'Action Three',
-          icon: Icons.start,
+          icon: Icons.upload,
         );
 
   @override

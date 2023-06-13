@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_process_indicator.dart';
@@ -7,29 +8,46 @@ import 'package:wt_actions_examples/actions/action_two.dart';
 
 void main() {
   runApp(
-    const ProviderScope(child: ActionButtonExamples()),
+    const ProviderScope(child: DemoApp(app: DemoPage())),
   );
 }
 
-class ActionButtonExamples extends StatelessWidget {
-  const ActionButtonExamples({super.key});
+class DemoApp extends StatelessWidget {
+  final Widget app;
+
+  const DemoApp({
+    super.key,
+    required this.app,
+  });
 
   @override
   Widget build(BuildContext context) {
+    const demoPage = DemoPage();
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: kIsWeb
+          ? const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 0.5,
+                      child: demoPage,
+                    ),
+                  )
+                ],
+              ),
+            )
+          : demoPage,
     );
   }
 }
 
-class MyHomePage extends ConsumerWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class DemoPage extends ConsumerWidget {
+  const DemoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,7 +56,7 @@ class MyHomePage extends ConsumerWidget {
     final actionThree = ref.read(ActionThree.provider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text('WT Action Button Demo'),
       ),
       body: Center(
         child: Column(
@@ -51,11 +69,7 @@ class MyHomePage extends ConsumerWidget {
             const SizedBox(height: 10),
             actionTwo.component(),
             const SizedBox(height: 10),
-            actionOne.component(),
-            const SizedBox(height: 10),
             actionThree.component(),
-            const SizedBox(height: 10),
-            actionThree.component(noLabel: true, color: Colors.amber),
             const SizedBox(height: 10),
             SizedBox(
               width: 200,
@@ -70,6 +84,8 @@ class MyHomePage extends ConsumerWidget {
                 type: IndicatorType.circular,
               ),
             ),
+            const SizedBox(height: 10),
+            actionOne.component(),
           ],
         ),
       ),
@@ -78,6 +94,20 @@ class MyHomePage extends ConsumerWidget {
         noLabel: true,
         color: Colors.blue,
         background: Colors.yellow,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              actionOne.component(noLabel: true),
+              actionTwo.component(noLabel: true),
+              actionThree.component(noLabel: true),
+            ],
+          ),
+        ),
       ),
     );
   }
