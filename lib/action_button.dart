@@ -170,9 +170,12 @@ class _ElevatedButton extends StatelessWidget {
           const SizedBox(
             width: 12,
           ),
-          Text(
-            label ?? '',
-            style: TextStyle(color: color ?? colorScheme.onPrimary),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2.0),
+            child: Text(
+              label ?? '',
+              style: TextStyle(color: color ?? colorScheme.onPrimary),
+            ),
           ),
         ],
       ),

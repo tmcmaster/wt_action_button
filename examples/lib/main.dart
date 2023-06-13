@@ -25,7 +25,7 @@ class DemoApp extends StatelessWidget {
     const demoPage = DemoPage();
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blue,
       ),
       home: kIsWeb
           ? const Center(
@@ -63,8 +63,8 @@ class DemoPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             actionOne.component(
-              background: Colors.purple,
-              color: Colors.yellow,
+              background: Colors.red,
+              color: Colors.white,
             ),
             const SizedBox(height: 10),
             actionTwo.component(),
