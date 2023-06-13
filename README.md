@@ -4,6 +4,11 @@ This component uses Riverpod to make actions available throughout the applicatio
 manages the state of the running process, as well as stopping the action from being run
 multiple times in parallel.
 
+## Demo of using the Action Buttons
+
+A [demo](https://tmcmaster.github.io/wt_action_button/#/) of using the Action Buttons has been 
+deployd to GitHup Pages, and the demo source can be found in the examples folder.
+
 ## Action performed with no feedback
 
 This action is run by the notifier, without the action giving feedback to the progress.
