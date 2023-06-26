@@ -18,7 +18,7 @@ dependencies:
   flutter_riverpod: ^2.0.2
   wt_logging:
     git:
-      url: git@github.com:tmcmaster/wt_logging.git
+      url: https://github.com/tmcmaster/wt_logging.git
 
 dev_dependencies:
   flutter_test:
