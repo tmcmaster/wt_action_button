@@ -19,12 +19,20 @@ abstract class ActionButtonDefinition {
     this.ref, {
     required this.icon,
     required this.label,
+    bool snackBar = false,
+    bool userLog = false,
+    LogMethod? log,
     List<DependencyChecker> dependencyCheckers = const [],
   }) {
     progress =
         StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>(
       name: 'actionOneProviders',
-      (ref) => ActionButtonStateNotifier(),
+      (ref) => ActionButtonStateNotifier(
+        ref,
+        snackBar: snackBar,
+        userLog: userLog,
+        log: log,
+      ),
     );
     dependencies = StateNotifierProvider<StateNotifier<bool>, bool>(
       name: 'Action One Progress',

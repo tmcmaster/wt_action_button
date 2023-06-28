@@ -1,10 +1,22 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 import 'action_button_state.dart';
 
+typedef LogMethod = void Function(dynamic message,
+    [dynamic error, StackTrace? stackTrace]);
+
 class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
-  ActionButtonStateNotifier()
-      : super(ActionButtonState(
+  final Ref _ref;
+  final bool snackBar;
+  final bool userLog;
+  final LogMethod? log;
+  ActionButtonStateNotifier(
+    this._ref, {
+    this.snackBar = false,
+    this.userLog = false,
+    this.log,
+  }) : super(ActionButtonState(
           total: 0,
           completed: 0,
           currentItem: '',
@@ -62,6 +74,11 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       currentItem: state.currentItem,
       errors: [...state.errors, '${state.currentItem} : $message'],
     );
+    if (userLog) {
+      _ref.read(UserLog.provider).error(message, snackBar: snackBar, log: log);
+    } else {
+      log?.call(message);
+    }
   }
 
   finished() {
