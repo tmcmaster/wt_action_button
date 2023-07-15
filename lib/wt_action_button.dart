@@ -1,3 +1,4 @@
+/// This is a library for managing user triggered actions.
 library wt_action_button;
 
 export 'action_button.dart';

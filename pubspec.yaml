@@ -1,21 +1,31 @@
 name: wt_action_button
 description: Define and manage actions within an application.
 publish_to: 'none'
-version: 0.0.2
+version: 1.0.0+1
 homepage: https://github.com/tmcmaster/wt_action_button
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=3.0.3 <4.0.0'
+
+# Scripts to be run with rps
+scripts:
+  init: flutter pub get
+  clean: flutter clean
+  refresh: flutter clean; flutter pub get
+  test: flutter test
+  check: dart analyze
+  fix: dart fix --dry-run
+  freezed:
+    build: dart run build_runner build --delete-conflicting-outputs
+  coverage:
+    generate: ./bin/generate_coverage.sh
+    view: open coverage/html/index.html
 
 dependencies:
   flutter:
     sdk: flutter
-  logger: ^1.1.0
-  riverpod: ^2.0.2
-  hooks_riverpod: ^2.0.2
-  flutter_hooks: ^0.18.5+1
-  flutter_riverpod: ^2.0.2
+  flutter_riverpod: ^2.3.6
+  logger: ^1.4.0
   wt_logging:
     git:
       url: https://github.com/tmcmaster/wt_logging.git
@@ -23,6 +33,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
-
-flutter:

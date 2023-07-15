@@ -1,10 +1,12 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_action_button/action_button_state.dart';
 import 'package:wt_logging/wt_logging.dart';
 
-import 'action_button_state.dart';
-
-typedef LogMethod = void Function(dynamic message,
-    [dynamic error, StackTrace? stackTrace]);
+typedef LogMethod = void Function(
+  dynamic message, [
+  dynamic error,
+  StackTrace? stackTrace,
+]);
 
 class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
   final Ref _ref;
@@ -16,13 +18,15 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     this.snackBar = false,
     this.userLog = false,
     this.log,
-  }) : super(ActionButtonState(
-          total: 0,
-          completed: 0,
-          currentItem: '',
-        ));
+  }) : super(
+          ActionButtonState(
+            total: 0,
+            completed: 0,
+            currentItem: '',
+          ),
+        );
 
-  start({
+  void start({
     int total = 1,
     String currentItem = '',
   }) {
@@ -30,7 +34,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
         ActionButtonState(total: total, completed: 0, currentItem: currentItem);
   }
 
-  void runWithFeedback({
+  Future<void> runWithFeedback({
     required int numberOfSteps,
     required Future<void> Function(Function(String currentItem) feedback)
         action,
@@ -56,7 +60,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     }
   }
 
-  next({String? currentItem}) {
+  void next({String? currentItem}) {
     if (state.completed + 1 <= state.total) {
       state = ActionButtonState(
         total: state.total,
@@ -67,7 +71,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     }
   }
 
-  error(String message) {
+  void error(String message) {
     state = ActionButtonState(
       total: state.total,
       completed: state.completed + 1,
@@ -81,7 +85,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     }
   }
 
-  finished() {
+  void finished() {
     state = ActionButtonState(
       total: state.total,
       completed: state.total,

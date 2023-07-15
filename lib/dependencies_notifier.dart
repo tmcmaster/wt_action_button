@@ -1,7 +1,6 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_action_button/dependency_checker.dart';
 import 'package:wt_logging/wt_logging.dart';
-
-import 'dependency_checker.dart';
 
 class DependenciesNotifier extends StateNotifier<bool> {
   static final log = logger(DependenciesNotifier);
@@ -12,25 +11,28 @@ class DependenciesNotifier extends StateNotifier<bool> {
     required Ref ref,
     required this.dependencies,
   }) : super(false) {
-    Set<String> uniqueProviderNames = {};
-    for (var checker in dependencies) {
+    final uniqueProviderNames = <String>{};
+    for (final checker in dependencies) {
       if (checker.dependency.name == null) {
         throw Exception(
-            'Providers must have a name: ${checker.dependency.runtimeType}');
+          'Providers must have a name: ${checker.dependency.runtimeType}',
+        );
       }
       if (uniqueProviderNames.contains(checker.dependency.name)) {
         throw Exception(
-            'Providers must have a unique name: ${checker.dependency.runtimeType}');
+          'Providers must have a unique name: ${checker.dependency.runtimeType}',
+        );
       }
 
-      removeListeners
-          .add(ref.listen<dynamic>(checker.dependency, (previous, next) {
-        String providerName = checker.dependency.name ?? 'should not happen';
-        available[providerName] = checker.check(next);
-        _recheck();
-      }));
+      removeListeners.add(
+        ref.listen<dynamic>(checker.dependency, (previous, next) {
+          final providerName = checker.dependency.name ?? 'should not happen';
+          available[providerName] = checker.check(next);
+          _recheck();
+        }),
+      );
 
-      String providerName = checker.dependency.name ?? 'should not happen';
+      final providerName = checker.dependency.name ?? 'should not happen';
       final value = ref.read(checker.dependency);
       available[providerName] = checker.check(value);
     }
@@ -39,7 +41,7 @@ class DependenciesNotifier extends StateNotifier<bool> {
 
   @override
   void dispose() {
-    for (var removeListener in removeListeners) {
+    for (final removeListener in removeListeners) {
       removeListener.close();
     }
     super.dispose();

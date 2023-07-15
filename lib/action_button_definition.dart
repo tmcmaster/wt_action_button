@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button.dart';
 import 'package:wt_action_button/action_process_indicator.dart';
 import 'package:wt_logging/wt_logging.dart';

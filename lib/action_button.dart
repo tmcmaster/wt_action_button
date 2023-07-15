@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button_definition.dart';
 
 export 'action_button_providers.dart';
@@ -8,7 +8,7 @@ export 'action_button_state_notifier.dart';
 export 'dependencies_notifier.dart';
 export 'dependency_checker.dart';
 
-class ActionButton extends HookConsumerWidget {
+class ActionButton extends ConsumerWidget {
   final VoidCallback? onPressed;
   final void Function(String error)? onError;
   final Icon icon;
@@ -54,27 +54,32 @@ class ActionButton extends HookConsumerWidget {
 
     return noLabel && !floating
         ? _IconButton(
-            color: color, colorScheme: colorScheme, icon: icon, action: action)
+            color: color,
+            colorScheme: colorScheme,
+            icon: icon,
+            action: action,
+          )
         : floating
             ? _FloatingActionButton(
                 action: action,
                 background: background,
                 colorScheme: colorScheme,
                 color: color,
-                icon: icon)
+                icon: icon,
+              )
             : _ElevatedButton(
                 color: color,
                 colorScheme: colorScheme,
                 background: background,
                 action: action,
                 icon: icon,
-                label: label);
+                label: label,
+              );
   }
 }
 
 class _IconButton extends StatelessWidget {
   const _IconButton({
-    super.key,
     required this.color,
     required this.colorScheme,
     required this.icon,
@@ -99,7 +104,6 @@ class _IconButton extends StatelessWidget {
 
 class _FloatingActionButton extends StatelessWidget {
   const _FloatingActionButton({
-    super.key,
     required this.action,
     required this.background,
     required this.colorScheme,
@@ -131,7 +135,6 @@ class _FloatingActionButton extends StatelessWidget {
 
 class _ElevatedButton extends StatelessWidget {
   const _ElevatedButton({
-    super.key,
     required this.color,
     required this.colorScheme,
     required this.background,

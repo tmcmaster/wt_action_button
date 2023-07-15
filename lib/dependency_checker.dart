@@ -1,4 +1,4 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DependencyChecker<T> {
   // TODO: is dependency required
@@ -15,7 +15,8 @@ class DependencyChecker<T> {
   }
 }
 
-class NotEmptyDependencyChecker<T extends Iterable> extends DependencyChecker<T> {
+class NotEmptyDependencyChecker<T extends Iterable>
+    extends DependencyChecker<T> {
   NotEmptyDependencyChecker({
     required super.dependency,
   }) : super(predicate: (value) => value.isNotEmpty);

@@ -17,7 +17,6 @@ class ActionProgressIndicator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final percentage = ref.watch(definition.progress).percentage;
-    print(percentage);
     return type == IndicatorType.linear
         ? LinearProgressIndicator(
             value: percentage,
