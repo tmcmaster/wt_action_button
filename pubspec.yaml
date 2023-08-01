@@ -5,7 +5,7 @@ version: 1.0.0+1
 homepage: https://github.com/tmcmaster/wt_action_button
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 # Scripts to be run with rps
 scripts:
