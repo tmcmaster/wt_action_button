@@ -79,7 +79,9 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       errors: [...state.errors, '${state.currentItem} : $message'],
     );
     if (userLog) {
-      _ref.read(UserLog.provider).error(message, snackBar: snackBar, log: log);
+      _ref
+          .read(UserLog.provider)
+          .error(message, showSnackBar: snackBar, log: log);
     } else {
       log?.call(message);
     }
