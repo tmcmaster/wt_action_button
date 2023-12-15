@@ -44,9 +44,10 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       await action((currentItem) {
         next(currentItem: currentItem);
       });
-      finished();
     } catch (err) {
       error(err.toString());
+    } finally {
+      finished();
     }
   }
 
@@ -54,9 +55,10 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     try {
       start();
       await action();
-      finished();
     } catch (err) {
       error(err.toString());
+    } finally {
+      finished();
     }
   }
 

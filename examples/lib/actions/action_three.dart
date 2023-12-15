@@ -25,7 +25,7 @@ class ActionThree extends ActionButtonDefinition {
       numberOfSteps: numberOfSteps,
       action: (feedback) async {
         log.d('Doing Action Three......');
-        for (var i in List.generate(numberOfSteps, (i) => i)) {
+        for (final i in List.generate(numberOfSteps, (i) => i)) {
           feedback('Current item: ${i + 1}');
           await Future.delayed(const Duration(seconds: 1));
         }

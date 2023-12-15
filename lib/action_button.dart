@@ -19,6 +19,7 @@ class ActionButton extends ConsumerWidget {
   final Color? background;
   final bool floating;
   final bool noLabel;
+  final double? iconSize;
   const ActionButton({
     super.key,
     required this.onPressed,
@@ -31,6 +32,7 @@ class ActionButton extends ConsumerWidget {
     this.background,
     this.floating = true,
     this.noLabel = false,
+    this.iconSize,
   });
 
   @override
@@ -52,136 +54,53 @@ class ActionButton extends ConsumerWidget {
           }
         : null;
 
-    return noLabel && !floating
-        ? _IconButton(
-            color: color,
-            colorScheme: colorScheme,
-            icon: icon,
-            action: action,
-          )
-        : floating
-            ? _FloatingActionButton(
-                action: action,
-                background: background,
-                colorScheme: colorScheme,
-                color: color,
-                icon: icon,
+    return floating
+        ? noLabel
+            ? FloatingActionButton(
+                enableFeedback: true,
+                backgroundColor: action == null
+                    ? Colors.grey.shade300
+                    : background ?? colorScheme.primary,
+                foregroundColor: action == null
+                    ? Colors.grey.shade700
+                    : color ?? colorScheme.onPrimary,
+                onPressed: action,
+                child: Icon(icon.icon),
               )
-            : _ElevatedButton(
-                color: color,
-                colorScheme: colorScheme,
-                background: background,
-                action: action,
+            : ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: color ?? colorScheme.onPrimary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 4,
+                  backgroundColor: background ?? colorScheme.primary,
+                ),
+                icon: Icon(
+                  size: 15,
+                  icon.icon,
+                  color: color ?? colorScheme.onPrimary,
+                ),
+                label: Padding(
+                  padding: const EdgeInsets.only(bottom: 2.0),
+                  child: Text(
+                    label ?? '',
+                    style: TextStyle(color: color ?? colorScheme.onPrimary),
+                  ),
+                ),
+                onPressed: action,
+              )
+        : label == null || noLabel
+            ? IconButton(
+                color: color ?? colorScheme.onPrimary,
                 icon: icon,
-                label: label,
+                enableFeedback: true,
+                onPressed: action,
+              )
+            : ElevatedButton.icon(
+                onPressed: action,
+                icon: icon,
+                label: Text(label!),
               );
-  }
-}
-
-class _IconButton extends StatelessWidget {
-  const _IconButton({
-    required this.color,
-    required this.colorScheme,
-    required this.icon,
-    required this.action,
-  });
-
-  final Color? color;
-  final ColorScheme colorScheme;
-  final Icon icon;
-  final Null Function()? action;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      color: color ?? colorScheme.onPrimary,
-      icon: icon,
-      enableFeedback: true,
-      onPressed: action,
-    );
-  }
-}
-
-class _FloatingActionButton extends StatelessWidget {
-  const _FloatingActionButton({
-    required this.action,
-    required this.background,
-    required this.colorScheme,
-    required this.color,
-    required this.icon,
-  });
-
-  final Null Function()? action;
-  final Color? background;
-  final ColorScheme colorScheme;
-  final Color? color;
-  final Icon icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      enableFeedback: true,
-      backgroundColor: action == null
-          ? Colors.grey.shade300
-          : background ?? colorScheme.primary,
-      foregroundColor: action == null
-          ? Colors.grey.shade700
-          : color ?? colorScheme.onPrimary,
-      onPressed: action,
-      child: Icon(icon.icon),
-    );
-  }
-}
-
-class _ElevatedButton extends StatelessWidget {
-  const _ElevatedButton({
-    required this.color,
-    required this.colorScheme,
-    required this.background,
-    required this.action,
-    required this.icon,
-    required this.label,
-  });
-
-  final Color? color;
-  final ColorScheme colorScheme;
-  final Color? background;
-  final Null Function()? action;
-  final Icon icon;
-  final String? label;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: color ?? colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        elevation: 4,
-        backgroundColor: background ?? colorScheme.primary,
-      ),
-      onPressed: action,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            size: 15,
-            icon.icon,
-            color: color ?? colorScheme.onPrimary,
-          ),
-          const SizedBox(
-            width: 12,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 2.0),
-            child: Text(
-              label ?? '',
-              style: TextStyle(color: color ?? colorScheme.onPrimary),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

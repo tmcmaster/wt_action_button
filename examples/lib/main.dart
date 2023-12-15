@@ -8,16 +8,13 @@ import 'package:wt_actions_examples/actions/action_two.dart';
 
 void main() {
   runApp(
-    const ProviderScope(child: DemoApp(app: DemoPage())),
+    const ProviderScope(child: DemoApp()),
   );
 }
 
 class DemoApp extends StatelessWidget {
-  final Widget app;
-
   const DemoApp({
     super.key,
-    required this.app,
   });
 
   @override
@@ -37,7 +34,7 @@ class DemoApp extends StatelessWidget {
                       aspectRatio: 0.5,
                       child: demoPage,
                     ),
-                  )
+                  ),
                 ],
               ),
             )

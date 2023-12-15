@@ -14,10 +14,12 @@ abstract class ActionButtonDefinition {
 
   final String label;
   final IconData icon;
+  final double? iconSize;
 
   ActionButtonDefinition(
     this.ref, {
     required this.icon,
+    this.iconSize,
     required this.label,
     bool snackBar = false,
     bool userLog = false,
@@ -59,10 +61,14 @@ abstract class ActionButtonDefinition {
     Color? background,
     bool floating = false,
     bool noLabel = false,
+    double? iconSize,
   }) {
     return ActionButton(
       label: label ?? this.label,
-      icon: Icon(icon ?? this.icon),
+      icon: Icon(
+        icon ?? this.icon,
+        size: iconSize ?? this.iconSize,
+      ),
       floating: floating,
       noLabel: noLabel,
       color: color,
