@@ -23,7 +23,7 @@ abstract class ActionButtonDefinition {
     required this.label,
     bool snackBar = false,
     bool userLog = false,
-    LogMethod? log,
+    LogFunction? log,
     List<DependencyChecker> dependencyCheckers = const [],
   }) {
     progress =

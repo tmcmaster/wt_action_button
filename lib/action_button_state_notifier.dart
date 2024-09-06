@@ -2,17 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button_state.dart';
 import 'package:wt_logging/wt_logging.dart';
 
-typedef LogMethod = void Function(
-  dynamic message, [
-  dynamic error,
-  StackTrace? stackTrace,
-]);
-
 class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
   final Ref _ref;
   final bool snackBar;
   final bool userLog;
-  final LogMethod? log;
+  final LogFunction? log;
   ActionButtonStateNotifier(
     this._ref, {
     this.snackBar = false,
