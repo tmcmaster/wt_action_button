@@ -24,11 +24,11 @@ scripts:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.3.6
-  logger: ^2.4.0
+  flutter_riverpod:
+  logger:
   wt_logging:
     git:
-      url: https://github.com/tmcmaster/wt_logging.git
+      url: git@github.com:tmcmaster/wt_logging.git
 
 dev_dependencies:
   flutter_test:

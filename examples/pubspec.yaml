@@ -21,16 +21,16 @@ scripts:
     view: open coverage/html/index.html
 
 dependencies:
-  cupertino_icons: ^1.0.5
+  cupertino_icons:
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.3.6
-  font_awesome_flutter: ^10.5.0
+  flutter_riverpod:
+  font_awesome_flutter:
   wt_action_button:
     path: ..
   wt_logging:
     git:
-      url: https://github.com/tmcmaster/wt_logging.git
+      url: git@github.com:tmcmaster/wt_logging.git
 
 dev_dependencies:
   flutter_test:
