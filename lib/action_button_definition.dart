@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button.dart';
 import 'package:wt_action_button/action_process_indicator.dart';
 import 'package:wt_logging/wt_logging.dart';
 
-abstract class ActionButtonDefinition {
-  late StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>
-      progress;
+abstract class ActionButtonDefinition<T> {
+  late StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState> progress;
   late StateNotifierProvider<StateNotifier<bool>, bool> dependencies;
 
   final Ref ref;
@@ -15,19 +13,20 @@ abstract class ActionButtonDefinition {
   final String label;
   final IconData icon;
   final double? iconSize;
+  final String? tooltip;
 
   ActionButtonDefinition(
     this.ref, {
     required this.icon,
     this.iconSize,
     required this.label,
+    this.tooltip,
     bool snackBar = false,
     bool userLog = false,
-    LogFunction? log,
+    Logger? log,
     List<DependencyChecker> dependencyCheckers = const [],
   }) {
-    progress =
-        StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>(
+    progress = StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState>(
       name: 'actionOneProviders',
       (ref) => ActionButtonStateNotifier(
         ref,
@@ -56,15 +55,18 @@ abstract class ActionButtonDefinition {
 
   Widget component({
     String? label,
+    String? tooltip,
     IconData? icon,
     Color? color,
     Color? background,
     bool floating = false,
     bool noLabel = false,
     double? iconSize,
+    T? state,
   }) {
     return ActionButton(
       label: label ?? this.label,
+      tooltip: tooltip ?? this.tooltip,
       icon: Icon(
         icon ?? this.icon,
         size: iconSize ?? this.iconSize,
@@ -74,12 +76,18 @@ abstract class ActionButtonDefinition {
       color: color,
       background: background,
       definition: this,
-      onPressed: () => execute(),
+      onPressed: () => state == null ? execute() : executeWithState(state),
       onError: (error) {
         ref.read(UserLog.provider).error(error);
       },
     );
   }
 
-  Future<void> execute();
+  Future<void> execute() {
+    throw Exception('execute() needs to be overridden if it is to be used.');
+  }
+
+  Future<void> executeWithState(T state) {
+    throw Exception('executeWithState(state) needs to be overridden if it is to be used.');
+  }
 }

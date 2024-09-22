@@ -15,6 +15,7 @@ class ActionButton extends ConsumerWidget {
   final bool startStop;
   final ActionButtonDefinition definition;
   final String? label;
+  final String? tooltip;
   final Color? color;
   final Color? background;
   final bool floating;
@@ -28,6 +29,7 @@ class ActionButton extends ConsumerWidget {
     this.startStop = false,
     required this.definition,
     this.label,
+    this.tooltip,
     this.color,
     this.background,
     this.floating = true,
@@ -54,7 +56,7 @@ class ActionButton extends ConsumerWidget {
           }
         : null;
 
-    return floating
+    final buttonWidget = floating
         ? noLabel
             ? FloatingActionButton(
                 enableFeedback: true,
@@ -102,5 +104,11 @@ class ActionButton extends ConsumerWidget {
                 icon: icon,
                 label: Text(label!),
               );
+    return tooltip == null
+        ? buttonWidget
+        : Tooltip(
+            message: tooltip,
+            child: buttonWidget,
+          );
   }
 }

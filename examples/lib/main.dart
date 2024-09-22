@@ -62,6 +62,7 @@ class DemoPage extends ConsumerWidget {
             actionOne.component(
               background: Colors.red,
               color: Colors.white,
+              state: 5,
             ),
             const SizedBox(height: 10),
             actionTwo.component(),

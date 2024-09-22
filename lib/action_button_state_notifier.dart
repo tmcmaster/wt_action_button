@@ -3,16 +3,19 @@ import 'package:wt_action_button/action_button_state.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
+  static final _logger = logger(ActionButtonStateNotifier, level: Level.debug);
+
   final Ref _ref;
   final bool snackBar;
   final bool userLog;
-  final LogFunction? log;
+  late final Logger log;
   ActionButtonStateNotifier(
     this._ref, {
     this.snackBar = false,
     this.userLog = false,
-    this.log,
-  }) : super(
+    Logger? log,
+  })  : log = log ?? _logger,
+        super(
           ActionButtonState(
             total: 0,
             completed: 0,
@@ -24,14 +27,12 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     int total = 1,
     String currentItem = '',
   }) {
-    state =
-        ActionButtonState(total: total, completed: 0, currentItem: currentItem);
+    state = ActionButtonState(total: total, completed: 0, currentItem: currentItem);
   }
 
   Future<void> runWithFeedback({
     required int numberOfSteps,
-    required Future<void> Function(Function(String currentItem) feedback)
-        action,
+    required Future<void> Function(Function(String currentItem) feedback) action,
   }) async {
     try {
       start(total: numberOfSteps);
@@ -58,29 +59,30 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
 
   void next({String? currentItem}) {
     if (state.completed + 1 <= state.total) {
+      log.d('Completed a step: $currentItem');
       state = ActionButtonState(
         total: state.total,
         completed: state.completed + 1,
         currentItem: currentItem ?? '',
         errors: state.errors,
       );
+    } else {
+      log.w('next was called when all of the steps ad been completed: $currentItem');
     }
   }
 
   void error(String message) {
+    if (userLog) {
+      _ref.read(UserLog.provider).error(message, showSnackBar: snackBar, log: log.e);
+    } else {
+      log.e(message);
+    }
     state = ActionButtonState(
       total: state.total,
       completed: state.completed + 1,
       currentItem: state.currentItem,
       errors: [...state.errors, '${state.currentItem} : $message'],
     );
-    if (userLog) {
-      _ref
-          .read(UserLog.provider)
-          .error(message, showSnackBar: snackBar, log: log);
-    } else {
-      log?.call(message);
-    }
   }
 
   void finished() {
