@@ -39,8 +39,8 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       await action((currentItem) {
         next(currentItem: currentItem);
       });
-    } catch (err) {
-      error(err.toString());
+    } catch (err, stacktrace) {
+      error(err.toString(), stacktrace: stacktrace);
     } finally {
       finished();
     }
@@ -50,8 +50,8 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     try {
       start();
       await action();
-    } catch (err) {
-      error(err.toString());
+    } catch (err, stacktrace) {
+      error(err.toString(), stacktrace: stacktrace);
     } finally {
       finished();
     }
@@ -71,17 +71,27 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     }
   }
 
-  void error(String message) {
+  void error(String message, {StackTrace? stacktrace}) {
     if (userLog) {
       _ref.read(UserLog.provider).error(message, showSnackBar: snackBar, log: log.e);
     } else {
-      log.e(message);
+      if (stacktrace != null) {
+        log.e('$message : $stacktrace');
+      } else {
+        log.e(message);
+      }
     }
     state = ActionButtonState(
       total: state.total,
       completed: state.completed + 1,
       currentItem: state.currentItem,
-      errors: [...state.errors, '${state.currentItem} : $message'],
+      errors: [
+        ...state.errors,
+        if (stacktrace == null)
+          '${state.currentItem} : $message'
+        else
+          '${state.currentItem} : $message : $stacktrace',
+      ],
     );
   }
 
