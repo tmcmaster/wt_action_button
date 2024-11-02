@@ -5,6 +5,8 @@ import 'package:wt_action_button/action_process_indicator.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 abstract class ActionButtonDefinition<T> {
+  static final log = logger(ActionButtonDefinition, level: Level.warning);
+
   late StateNotifierProvider<ActionButtonStateNotifier, ActionButtonState> progress;
   late StateNotifierProvider<StateNotifier<bool>, bool> dependencies;
 
@@ -63,7 +65,9 @@ abstract class ActionButtonDefinition<T> {
     bool noLabel = false,
     double? iconSize,
     T? state,
+    bool disabled = false,
   }) {
+    log.d('Creating button component: $state');
     return ActionButton(
       label: label ?? this.label,
       tooltip: tooltip ?? this.tooltip,
@@ -76,7 +80,7 @@ abstract class ActionButtonDefinition<T> {
       color: color,
       background: background,
       definition: this,
-      onPressed: () => state == null ? execute() : executeWithState(state),
+      onPressed: disabled ? null : () => state == null ? execute() : executeWithState(state),
       onError: (error) {
         ref.read(UserLog.provider).error(error);
       },

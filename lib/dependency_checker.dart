@@ -15,8 +15,7 @@ class DependencyChecker<T> {
   }
 }
 
-class NotEmptyDependencyChecker<T extends Iterable>
-    extends DependencyChecker<T> {
+class NotEmptyDependencyChecker<T extends Iterable> extends DependencyChecker<T> {
   NotEmptyDependencyChecker({
     required super.dependency,
   }) : super(predicate: (value) => value.isNotEmpty);
@@ -26,4 +25,16 @@ class NotNullDependencyChecker<T> extends DependencyChecker<T> {
   NotNullDependencyChecker({
     required super.dependency,
   }) : super(predicate: (value) => value != null);
+}
+
+class IsTrueDependencyChecker extends DependencyChecker<bool> {
+  IsTrueDependencyChecker({
+    required super.dependency,
+  }) : super(predicate: (value) => value == true);
+}
+
+class IsFalseDependencyChecker extends DependencyChecker<bool> {
+  IsFalseDependencyChecker({
+    required super.dependency,
+  }) : super(predicate: (value) => value == false);
 }
