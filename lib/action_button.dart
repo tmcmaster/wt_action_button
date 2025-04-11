@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button_definition.dart';
 
 export 'action_button_providers.dart';
-export 'action_button_state.dart';
 export 'action_button_state_notifier.dart';
 export 'dependencies_notifier.dart';
 export 'dependency_checker.dart';
+export 'model/action_button_state.dart';
 
 class ActionButton extends ConsumerWidget {
   final VoidCallback? onPressed;
@@ -43,7 +43,7 @@ class ActionButton extends ConsumerWidget {
     final bool dependencies = ref.watch(definition.dependencies);
     final notifier = ref.read(definition.progress.notifier);
     final colorScheme = Theme.of(context).colorScheme;
-    final action = progress.done && onPressed != null && dependencies
+    final action = !progress.active && onPressed != null && dependencies
         ? () {
             try {
               if (startStop) notifier.finished();
@@ -60,12 +60,10 @@ class ActionButton extends ConsumerWidget {
         ? noLabel
             ? FloatingActionButton(
                 enableFeedback: true,
-                backgroundColor: action == null
-                    ? Colors.grey.shade300
-                    : background ?? colorScheme.primary,
-                foregroundColor: action == null
-                    ? Colors.grey.shade700
-                    : color ?? colorScheme.onPrimary,
+                backgroundColor:
+                    action == null ? Colors.grey.shade300 : background ?? colorScheme.primary,
+                foregroundColor:
+                    action == null ? Colors.grey.shade700 : color ?? colorScheme.onPrimary,
                 onPressed: action,
                 child: Icon(icon.icon),
               )

@@ -19,12 +19,12 @@ class ActionProgressIndicator extends ConsumerWidget {
     final percentage = ref.watch(definition.progress).percentage;
     return type == IndicatorType.linear
         ? LinearProgressIndicator(
-            value: percentage,
+            value: percentage / 100,
           )
         : AspectRatio(
             aspectRatio: 1,
             child: CircularProgressIndicator(
-              value: percentage,
+              value: percentage / 100,
             ),
           );
   }

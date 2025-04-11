@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wt_action_button/action_button_state.dart';
+import 'package:wt_action_button/model/action_button_state.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
@@ -15,27 +15,29 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     this.userLog = false,
     Logger? log,
   })  : log = log ?? _logger,
-        super(
-          ActionButtonState(
-            total: 0,
-            completed: 0,
-            currentItem: '',
-          ),
-        );
+        super(ActionButtonState.empty);
 
   void start({
     int total = 1,
     String currentItem = '',
   }) {
-    state = ActionButtonState(total: total, completed: 0, currentItem: currentItem);
+    if (state.active) {
+      throw Exception('There is already an active action');
+    }
+    state = ActionButtonState.empty.copyWith(
+      active: true,
+      total: total,
+      currentItem: currentItem,
+    );
+    log.d('Start State: $state');
   }
 
   Future<void> runWithFeedback({
     required int numberOfSteps,
     required Future<void> Function(Function(String currentItem) feedback) action,
   }) async {
+    start(total: numberOfSteps);
     try {
-      start(total: numberOfSteps);
       await action((currentItem) {
         next(currentItem: currentItem);
       });
@@ -47,8 +49,8 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
   }
 
   Future<void> run(Function() action) async {
+    start();
     try {
-      start();
       await action();
     } catch (err, stacktrace) {
       error(err.toString(), stacktrace: stacktrace);
@@ -57,17 +59,19 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     }
   }
 
-  void next({String? currentItem}) {
+  void next({String currentItem = ''}) {
     if (state.completed + 1 <= state.total) {
       log.d('Completed a step: $currentItem');
-      state = ActionButtonState(
-        total: state.total,
-        completed: state.completed + 1,
-        currentItem: currentItem ?? '',
-        errors: state.errors,
+      final newCompleted = state.completed + 1;
+      final newActive = newCompleted < state.total;
+      state = state.copyWith(
+        completed: newCompleted,
+        currentItem: currentItem,
+        active: newActive,
       );
     } else {
-      log.w('next was called when all of the steps ad been completed: $currentItem');
+      log.w('next was called when all of the steps had been completed: $currentItem');
+      finished();
     }
   }
 
@@ -81,10 +85,8 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
         log.e(message);
       }
     }
-    state = ActionButtonState(
-      total: state.total,
-      completed: state.completed + 1,
-      currentItem: state.currentItem,
+    state = state.copyWith(
+      active: false,
       errors: [
         ...state.errors,
         if (stacktrace == null)
@@ -96,11 +98,9 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
   }
 
   void finished() {
-    state = ActionButtonState(
-      total: state.total,
+    state = state.copyWith(
       completed: state.total,
-      currentItem: '',
-      errors: state.errors,
+      active: false,
     );
   }
 }

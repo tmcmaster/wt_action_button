@@ -21,6 +21,7 @@ class DemoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const demoPage = DemoPage();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -83,7 +84,14 @@ class DemoPage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 10),
-            actionOne.component(),
+            actionOne.component(state: 1),
+            const SizedBox(height: 10),
+            TextButton(
+              child: const Text('Push the Button'),
+              onPressed: () {
+                actionThree.execute();
+              },
+            ),
           ],
         ),
       ),
@@ -100,7 +108,7 @@ class DemoPage extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              actionOne.component(noLabel: true),
+              actionOne.component(noLabel: true, state: 2),
               actionTwo.component(noLabel: true),
               actionThree.component(noLabel: true),
             ],
