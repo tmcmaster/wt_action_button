@@ -1,0 +1,19 @@
+scripts:
+  init: flutter pub get
+  clean: flutter clean
+  update: flutter clean; rm pubspec.lock; flutter pub get; dart pub update
+  refresh: flutter clean; flutter pub get
+  test: flutter test
+  check: dart analyze
+  fix: dart fix --dry-run
+  freezed:
+    build: dart run build_runner build --delete-conflicting-outputs
+  coverage:
+    generate: ./bin/generate_coverage.sh
+    view: open coverage/html/index.html
+  macos:
+    init: flutter create --platforms=macos .
+    build: flutter build macos --release
+    run: flutter run -t lib/main.dart -d MacOS
+    xcode: open macos/Runner.xcworkspace
+    fix: (cd macos; rm Podfile.lock; gem pristine ffi --version 1.15.5; pod install --repo-update)
