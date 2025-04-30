@@ -94,4 +94,17 @@ abstract class ActionButtonDefinition<T> {
   Future<void> executeWithState(T state) {
     throw Exception('executeWithState(state) needs to be overridden if it is to be used.');
   }
+
+  Future<void> simulate(
+    String message, {
+    Logger? logger,
+    Duration duration = const Duration(seconds: 2),
+  }) {
+    return ref.read(progress.notifier).run(() {
+      (logger ?? log).i(message);
+      return Future.delayed(duration, () {
+        (logger ?? log).i('Completed($message)');
+      });
+    });
+  }
 }
