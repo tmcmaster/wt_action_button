@@ -11,6 +11,7 @@ export 'model/action_button_state.dart';
 class ActionButton extends ConsumerWidget {
   final VoidCallback? onPressed;
   final void Function(String error)? onError;
+  final void Function()? onComplete;
   final Icon icon;
   final bool startStop;
   final ActionButtonDefinition definition;
@@ -25,6 +26,7 @@ class ActionButton extends ConsumerWidget {
     super.key,
     required this.onPressed,
     this.onError,
+    this.onComplete,
     required this.icon,
     this.startStop = false,
     required this.definition,
@@ -48,6 +50,7 @@ class ActionButton extends ConsumerWidget {
             try {
               if (startStop) notifier.finished();
               onPressed!.call();
+              onComplete?.call();
             } catch (error) {
               onError?.call(error.toString());
             } finally {

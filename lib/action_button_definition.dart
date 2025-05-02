@@ -66,6 +66,8 @@ abstract class ActionButtonDefinition<T> {
     double? iconSize,
     T? state,
     bool disabled = false,
+    VoidCallback? onComplete,
+    void Function(String error)? onError,
   }) {
     log.d('Creating button component: $state');
     return ActionButton(
@@ -81,8 +83,10 @@ abstract class ActionButtonDefinition<T> {
       background: background,
       definition: this,
       onPressed: disabled ? null : () => state == null ? execute() : executeWithState(state),
+      onComplete: onComplete,
       onError: (error) {
         ref.read(UserLog.provider).error(error);
+        onError?.call(error);
       },
     );
   }
