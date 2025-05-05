@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wt_action_button/model/action_button_status.dart';
 
 part 'action_button_state.freezed.dart';
 part 'action_button_state.g.dart';
@@ -20,6 +21,22 @@ class ActionButtonState with _$ActionButtonState {
   double get percentage => total == 0 ? 100 : (completed / total) * 100;
   bool get done => total == completed && !active;
   bool get hasErrors => errors.isNotEmpty;
+
+  ActionButtonStatus get status {
+    if (hasErrors) {
+      return ActionButtonStatus.failed;
+    } else if (done) {
+      return ActionButtonStatus.completed;
+    } else if (active) {
+      return ActionButtonStatus.inProgress;
+    } else if (completed == 0) {
+      return ActionButtonStatus.notStarted;
+    } else if (completed < total) {
+      return ActionButtonStatus.skipped;
+    } else {
+      return ActionButtonStatus.blocked;
+    }
+  }
 
   factory ActionButtonState.fromJson(Map<String, dynamic> json) =>
       _$ActionButtonStateFromJson(json);

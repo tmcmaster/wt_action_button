@@ -103,4 +103,15 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       active: false,
     );
   }
+
+  void resetAction() {
+    if (!state.active) {
+      state = state.copyWith(
+        completed: 0,
+        active: false,
+        errors: [],
+        currentItem: '',
+      );
+    }
+  }
 }

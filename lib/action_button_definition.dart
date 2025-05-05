@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button.dart';
 import 'package:wt_action_button/action_process_indicator.dart';
+import 'package:wt_action_button/model/action_info.dart';
+import 'package:wt_action_button/widget/action_button_status_icon.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 abstract class ActionButtonDefinition<T> {
@@ -12,17 +14,11 @@ abstract class ActionButtonDefinition<T> {
 
   final Ref ref;
 
-  final String label;
-  final IconData icon;
-  final double? iconSize;
-  final String? tooltip;
+  final ActionInfo actionInfo;
 
   ActionButtonDefinition(
     this.ref, {
-    required this.icon,
-    this.iconSize,
-    required this.label,
-    this.tooltip,
+    required this.actionInfo,
     bool snackBar = false,
     bool userLog = false,
     Logger? log,
@@ -55,6 +51,16 @@ abstract class ActionButtonDefinition<T> {
     );
   }
 
+  Widget statusIcon() {
+    return ActionButtonStatusIcon(
+      actionInfo: actionInfo,
+      stateProvider: progress,
+      onTap: () {
+        ref.read(progress.notifier).resetAction();
+      },
+    );
+  }
+
   Widget component({
     String? label,
     String? tooltip,
@@ -71,11 +77,11 @@ abstract class ActionButtonDefinition<T> {
   }) {
     log.d('Creating button component: $state');
     return ActionButton(
-      label: label ?? this.label,
-      tooltip: tooltip ?? this.tooltip,
-      icon: Icon(
-        icon ?? this.icon,
-        size: iconSize ?? this.iconSize,
+      actionInfo: actionInfo.copyWith(
+        label: label,
+        tooltip: tooltip,
+        icon: icon,
+        iconSize: iconSize,
       ),
       floating: floating,
       noLabel: noLabel,
@@ -103,11 +109,13 @@ abstract class ActionButtonDefinition<T> {
     String message, {
     Logger? logger,
     Duration duration = const Duration(seconds: 2),
-  }) {
-    return ref.read(progress.notifier).run(() {
-      (logger ?? log).i(message);
-      return Future.delayed(duration, () {
-        (logger ?? log).i('Completed($message)');
+  }) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(progress.notifier).run(() {
+        (logger ?? log).i(message);
+        return Future.delayed(duration, () {
+          (logger ?? log).i('Completed($message)');
+        });
       });
     });
   }

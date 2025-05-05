@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/wt_action_button.dart';
 
-enum IndicatorType { circular, linear }
+enum IndicatorType { circular, linear, icon }
 
 class ActionProgressIndicator extends ConsumerWidget {
   final ActionButtonDefinition definition;

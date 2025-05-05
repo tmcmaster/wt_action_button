@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/action_button_definition.dart';
+import 'package:wt_action_button/model/action_info.dart';
 
 export 'action_button_providers.dart';
 export 'action_button_state_notifier.dart';
@@ -12,31 +13,27 @@ class ActionButton extends ConsumerWidget {
   final VoidCallback? onPressed;
   final void Function(String error)? onError;
   final void Function()? onComplete;
-  final Icon icon;
+  final ActionInfo actionInfo;
   final bool startStop;
   final ActionButtonDefinition definition;
-  final String? label;
-  final String? tooltip;
   final Color? color;
   final Color? background;
   final bool floating;
   final bool noLabel;
-  final double? iconSize;
+  final double iconSize;
   const ActionButton({
     super.key,
+    required this.actionInfo,
     required this.onPressed,
     this.onError,
     this.onComplete,
-    required this.icon,
     this.startStop = false,
     required this.definition,
-    this.label,
-    this.tooltip,
+    this.iconSize = 15,
     this.color,
     this.background,
     this.floating = true,
     this.noLabel = false,
-    this.iconSize,
   });
 
   @override
@@ -68,7 +65,7 @@ class ActionButton extends ConsumerWidget {
                 foregroundColor:
                     action == null ? Colors.grey.shade700 : color ?? colorScheme.onPrimary,
                 onPressed: action,
-                child: Icon(icon.icon),
+                child: Icon(actionInfo.icon),
               )
             : ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -80,35 +77,35 @@ class ActionButton extends ConsumerWidget {
                   backgroundColor: background ?? colorScheme.primary,
                 ),
                 icon: Icon(
-                  size: 15,
-                  icon.icon,
+                  size: iconSize,
+                  actionInfo.icon,
                   color: color ?? colorScheme.onPrimary,
                 ),
                 label: Padding(
                   padding: const EdgeInsets.only(bottom: 2.0),
                   child: Text(
-                    label ?? '',
+                    actionInfo.label,
                     style: TextStyle(color: color ?? colorScheme.onPrimary),
                   ),
                 ),
                 onPressed: action,
               )
-        : label == null || noLabel
+        : noLabel
             ? IconButton(
                 color: color ?? colorScheme.onPrimary,
-                icon: icon,
+                icon: Icon(actionInfo.icon),
                 enableFeedback: true,
                 onPressed: action,
               )
             : ElevatedButton.icon(
                 onPressed: action,
-                icon: icon,
-                label: Text(label!),
+                icon: Icon(actionInfo.icon),
+                label: Text(actionInfo.label),
               );
-    return tooltip == null
+    return actionInfo.tooltip == null
         ? buttonWidget
         : Tooltip(
-            message: tooltip,
+            message: actionInfo.tooltip,
             child: buttonWidget,
           );
   }
