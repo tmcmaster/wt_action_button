@@ -108,13 +108,18 @@ abstract class ActionButtonDefinition<T> {
   Future<void> simulate(
     String message, {
     Logger? logger,
+    bool throwError = false,
     Duration duration = const Duration(seconds: 2),
   }) async {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(progress.notifier).run(() {
-        (logger ?? log).i(message);
+        (logger ?? log).i('Simulating($message)');
         return Future.delayed(duration, () {
-          (logger ?? log).i('Completed($message)');
+          if (throwError) {
+            throw Exception('Error($message)');
+          } else {
+            (logger ?? log).i('Completed($message)');
+          }
         });
       });
     });
