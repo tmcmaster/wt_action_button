@@ -11,6 +11,7 @@ class ActionButtonState with _$ActionButtonState {
     @Default(0) int completed,
     @Default('') String currentItem,
     @Default(false) bool active,
+    @Default(ActionButtonStatus.notStarted) ActionButtonStatus status,
     @Default([]) List<String> errors,
   }) = _ActionButtonState;
 
@@ -21,22 +22,6 @@ class ActionButtonState with _$ActionButtonState {
   double get percentage => total == 0 ? 100 : (completed / total) * 100;
   bool get done => total == completed && !active;
   bool get hasErrors => errors.isNotEmpty;
-
-  ActionButtonStatus get status {
-    if (hasErrors) {
-      return ActionButtonStatus.failed;
-    } else if (done) {
-      return ActionButtonStatus.completed;
-    } else if (active) {
-      return ActionButtonStatus.inProgress;
-    } else if (completed == 0) {
-      return ActionButtonStatus.notStarted;
-    } else if (completed < total) {
-      return ActionButtonStatus.skipped;
-    } else {
-      return ActionButtonStatus.blocked;
-    }
-  }
 
   factory ActionButtonState.fromJson(Map<String, dynamic> json) =>
       _$ActionButtonStateFromJson(json);

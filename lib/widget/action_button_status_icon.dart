@@ -14,7 +14,6 @@ class ActionButtonStatusIcon extends ConsumerWidget {
     required this.actionInfo,
     required this.stateProvider,
     required this.onTap,
-    required,
   });
 
   @override

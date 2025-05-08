@@ -13,6 +13,9 @@ _$ActionButtonStateImpl _$$ActionButtonStateImplFromJson(
       completed: (json['completed'] as num?)?.toInt() ?? 0,
       currentItem: json['currentItem'] as String? ?? '',
       active: json['active'] as bool? ?? false,
+      status:
+          $enumDecodeNullable(_$ActionButtonStatusEnumMap, json['status']) ??
+              ActionButtonStatus.notStarted,
       errors: (json['errors'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -26,5 +29,15 @@ Map<String, dynamic> _$$ActionButtonStateImplToJson(
       'completed': instance.completed,
       'currentItem': instance.currentItem,
       'active': instance.active,
+      'status': _$ActionButtonStatusEnumMap[instance.status]!,
       'errors': instance.errors,
     };
+
+const _$ActionButtonStatusEnumMap = {
+  ActionButtonStatus.notStarted: 'notStarted',
+  ActionButtonStatus.inProgress: 'inProgress',
+  ActionButtonStatus.blocked: 'blocked',
+  ActionButtonStatus.completed: 'completed',
+  ActionButtonStatus.skipped: 'skipped',
+  ActionButtonStatus.failed: 'failed',
+};

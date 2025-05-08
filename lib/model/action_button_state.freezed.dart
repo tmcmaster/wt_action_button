@@ -24,6 +24,7 @@ mixin _$ActionButtonState {
   int get completed => throw _privateConstructorUsedError;
   String get currentItem => throw _privateConstructorUsedError;
   bool get active => throw _privateConstructorUsedError;
+  ActionButtonStatus get status => throw _privateConstructorUsedError;
   List<String> get errors => throw _privateConstructorUsedError;
 
   /// Serializes this ActionButtonState to a JSON map.
@@ -47,6 +48,7 @@ abstract class $ActionButtonStateCopyWith<$Res> {
       int completed,
       String currentItem,
       bool active,
+      ActionButtonStatus status,
       List<String> errors});
 }
 
@@ -69,6 +71,7 @@ class _$ActionButtonStateCopyWithImpl<$Res, $Val extends ActionButtonState>
     Object? completed = null,
     Object? currentItem = null,
     Object? active = null,
+    Object? status = null,
     Object? errors = null,
   }) {
     return _then(_value.copyWith(
@@ -88,6 +91,10 @@ class _$ActionButtonStateCopyWithImpl<$Res, $Val extends ActionButtonState>
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ActionButtonStatus,
       errors: null == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -109,6 +116,7 @@ abstract class _$$ActionButtonStateImplCopyWith<$Res>
       int completed,
       String currentItem,
       bool active,
+      ActionButtonStatus status,
       List<String> errors});
 }
 
@@ -129,6 +137,7 @@ class __$$ActionButtonStateImplCopyWithImpl<$Res>
     Object? completed = null,
     Object? currentItem = null,
     Object? active = null,
+    Object? status = null,
     Object? errors = null,
   }) {
     return _then(_$ActionButtonStateImpl(
@@ -148,6 +157,10 @@ class __$$ActionButtonStateImplCopyWithImpl<$Res>
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ActionButtonStatus,
       errors: null == errors
           ? _value._errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -164,6 +177,7 @@ class _$ActionButtonStateImpl extends _ActionButtonState {
       this.completed = 0,
       this.currentItem = '',
       this.active = false,
+      this.status = ActionButtonStatus.notStarted,
       final List<String> errors = const []})
       : _errors = errors,
         super._();
@@ -183,6 +197,9 @@ class _$ActionButtonStateImpl extends _ActionButtonState {
   @override
   @JsonKey()
   final bool active;
+  @override
+  @JsonKey()
+  final ActionButtonStatus status;
   final List<String> _errors;
   @override
   @JsonKey()
@@ -194,7 +211,7 @@ class _$ActionButtonStateImpl extends _ActionButtonState {
 
   @override
   String toString() {
-    return 'ActionButtonState(total: $total, completed: $completed, currentItem: $currentItem, active: $active, errors: $errors)';
+    return 'ActionButtonState(total: $total, completed: $completed, currentItem: $currentItem, active: $active, status: $status, errors: $errors)';
   }
 
   @override
@@ -208,13 +225,14 @@ class _$ActionButtonStateImpl extends _ActionButtonState {
             (identical(other.currentItem, currentItem) ||
                 other.currentItem == currentItem) &&
             (identical(other.active, active) || other.active == active) &&
+            (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._errors, _errors));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, total, completed, currentItem,
-      active, const DeepCollectionEquality().hash(_errors));
+      active, status, const DeepCollectionEquality().hash(_errors));
 
   /// Create a copy of ActionButtonState
   /// with the given fields replaced by the non-null parameter values.
@@ -239,6 +257,7 @@ abstract class _ActionButtonState extends ActionButtonState {
       final int completed,
       final String currentItem,
       final bool active,
+      final ActionButtonStatus status,
       final List<String> errors}) = _$ActionButtonStateImpl;
   const _ActionButtonState._() : super._();
 
@@ -253,6 +272,8 @@ abstract class _ActionButtonState extends ActionButtonState {
   String get currentItem;
   @override
   bool get active;
+  @override
+  ActionButtonStatus get status;
   @override
   List<String> get errors;
 

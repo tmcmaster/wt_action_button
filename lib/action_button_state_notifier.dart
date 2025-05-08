@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_action_button/model/action_button_state.dart';
+import 'package:wt_action_button/model/action_button_status.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
@@ -28,6 +29,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       active: true,
       total: total,
       currentItem: currentItem,
+      status: ActionButtonStatus.inProgress,
     );
     log.d('Start State: $state');
   }
@@ -52,6 +54,9 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
     start();
     try {
       await action();
+      state = state.copyWith(
+        status: ActionButtonStatus.completed,
+      );
     } catch (err, stacktrace) {
       error(err.toString(), stacktrace: stacktrace);
     } finally {
@@ -68,6 +73,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
         completed: newCompleted,
         currentItem: currentItem,
         active: newActive,
+        status: newActive == true ? ActionButtonStatus.inProgress : state.status,
       );
     } else {
       log.w('next was called when all of the steps had been completed: $currentItem');
@@ -99,8 +105,18 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
 
   void finished() {
     state = state.copyWith(
-      completed: state.total,
+        completed: state.total,
+        active: false,
+        status: state.hasErrors ? ActionButtonStatus.failed : ActionButtonStatus.completed);
+  }
+
+  void setStatus(ActionButtonStatus status) {
+    state = state = state.copyWith(
+      completed: 0,
       active: false,
+      errors: [],
+      currentItem: '',
+      status: status,
     );
   }
 
@@ -111,6 +127,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
         active: false,
         errors: [],
         currentItem: '',
+        status: ActionButtonStatus.notStarted,
       );
     }
   }
