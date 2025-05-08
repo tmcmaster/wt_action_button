@@ -4,11 +4,13 @@ class ActionInfo {
   final String label;
   final IconData icon;
   final String? tooltip;
+  final bool isConfirmationOnly;
 
   ActionInfo({
     required this.label,
     required this.icon,
     required this.tooltip,
+    this.isConfirmationOnly = false,
   });
 
   ActionInfo copyWith({
