@@ -2,6 +2,7 @@ name: wt_action_button
 description: Define and manage actions within an application.
 publish_to: 'none'
 version: 1.0.0+1
+repository: https://github.com/tmcmaster/wt_action_button/tree/wix_admin
 homepage: https://github.com/tmcmaster/wt_action_button
 
 environment:
