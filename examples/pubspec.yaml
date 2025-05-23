@@ -7,6 +7,9 @@ environment:
   sdk: '>=3.1.0 <4.0.0'
   flutter: '>=3.29.2'
 
+flutter:
+  uses-material-design: true
+
 dependencies:
   cupertino_icons:
   flutter:
@@ -23,32 +26,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-flutter:
-  uses-material-design: true
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+dependency_overrides:
+  wt_logging:
+    path: ../../wt_logging

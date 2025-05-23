@@ -712,11 +712,9 @@ packages:
   wt_logging:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "7baa9bfe29bb264b0f2a35e133a146e11603c14f"
-      url: "git@github.com:tmcmaster/wt_logging.git"
-    source: git
+      path: "../wt_logging"
+      relative: true
+    source: path
     version: "1.0.3+3"
   xdg_directories:
     dependency: transitive
