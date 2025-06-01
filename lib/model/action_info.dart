@@ -9,7 +9,7 @@ class ActionInfo {
   ActionInfo({
     required this.label,
     required this.icon,
-    required this.tooltip,
+    this.tooltip,
     this.isConfirmationOnly = false,
   });
 
