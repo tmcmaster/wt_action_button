@@ -28,4 +28,5 @@ migrate_working_dir/
 .packages
 build/
 hold/
+junk/
 .flutter-plugins-dependencies

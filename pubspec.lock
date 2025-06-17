@@ -169,6 +169,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+  csv:
+    dependency: transitive
+    description:
+      name: csv
+      sha256: c6aa2679b2a18cb57652920f674488d89712efaf4d3fdf2e537215b35fc19d6c
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
+  cupertino_icons:
+    dependency: transitive
+    description:
+      name: cupertino_icons
+      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.8"
   dart_style:
     dependency: transitive
     description:
@@ -177,6 +193,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  date_time_picker:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: c3e4938a24ace85fea8eaa919cc051815f36d444
+      url: "git@github.com:tmcmaster/date_time_picker.git"
+    source: git
+    version: "2.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -264,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
+  go_router:
+    dependency: transitive
+    description:
+      name: go_router
+      sha256: f222e12c5360b0c90aae5d33e6b351a6789d4aa1c97b32691b4a30946fc91813
+      url: "https://pub.dev"
+    source: hosted
+    version: "15.2.0"
   graphs:
     dependency: transitive
     description:
@@ -296,6 +329,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.19.0"
   io:
     dependency: transitive
     description:
@@ -408,6 +449,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  mockito:
+    dependency: transitive
+    description:
+      name: mockito
+      sha256: f99d8d072e249f719a5531735d146d8cf04c580d93920b04de75bef6dfb2daf6
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.5"
+  number_selector:
+    dependency: transitive
+    description:
+      name: number_selector
+      sha256: a154056620d671a624837d70f1fd87249f9b6d837bb04da125502d1fb2f4eff9
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.7"
   package_config:
     dependency: transitive
     description:
@@ -536,6 +593,62 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.1"
+  shared_preferences:
+    dependency: transitive
+    description:
+      name: shared_preferences
+      sha256: "6e8bf70b7fef813df4e9a36f658ac46d107db4b4cfe1048b477d4e453a8159f5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.3"
+  shared_preferences_android:
+    dependency: transitive
+    description:
+      name: shared_preferences_android
+      sha256: "20cbd561f743a342c76c151d6ddb93a9ce6005751e7aa458baad3858bfbfb6ac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.10"
+  shared_preferences_foundation:
+    dependency: transitive
+    description:
+      name: shared_preferences_foundation
+      sha256: "6a52cfcdaeac77cad8c97b539ff688ccfc458c007b4db12be584fbe5c0e49e03"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.4"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      sha256: "580abfd40f415611503cae30adf626e6656dfb2f0cee8f465ece7b6defb40f2f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  shared_preferences_platform_interface:
+    dependency: transitive
+    description:
+      name: shared_preferences_platform_interface
+      sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  shared_preferences_web:
+    dependency: transitive
+    description:
+      name: shared_preferences_web
+      sha256: c49bd060261c9a3f0ff445892695d6212ff603ef3115edbb448509d407600019
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.3"
+  shared_preferences_windows:
+    dependency: transitive
+    description:
+      name: shared_preferences_windows
+      sha256: "94ef0f72b2d71bc3e700e025db3710911bd51a71cefb65cc609dd0d9a982e3c1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   shelf:
     dependency: transitive
     description:
@@ -581,6 +694,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.1"
+  spring_button:
+    dependency: transitive
+    description:
+      name: spring_button
+      sha256: b6d0839fc711a691d14159cf3feb499f9067ba5542630d1db0effac3c9fd2dae
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -709,6 +830,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.12.0"
+  wt_app_definition:
+    dependency: "direct main"
+    description:
+      path: "../wt_app_definition"
+      relative: true
+    source: path
+    version: "0.0.1"
   wt_logging:
     dependency: "direct main"
     description:
@@ -716,6 +844,33 @@ packages:
       relative: true
     source: path
     version: "1.0.3+3"
+  wt_models:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "275122d18774e0dc0664282693eb28ee54914547"
+      url: "git@github.com:tmcmaster/wt_models.git"
+    source: git
+    version: "1.0.0+1"
+  wt_provider_manager:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "6473ee11602d4e77088180f4ac302f72a6052eaa"
+      url: "git@github.com:tmcmaster/wt_provider_manager.git"
+    source: git
+    version: "0.0.1"
+  wt_settings:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "819debbc5a6e132c9533d66dd7e646f35eb7adb9"
+      url: "git@github.com:tmcmaster/wt_settings.git"
+    source: git
+    version: "1.0.0+1"
   xdg_directories:
     dependency: transitive
     description:

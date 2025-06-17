@@ -15,6 +15,9 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
   logger:
+  wt_app_definition:
+    git:
+      url: git@github.com:tmcmaster/wt_app_definition.git
   wt_logging:
     git:
       url: git@github.com:tmcmaster/wt_logging.git
@@ -27,5 +30,7 @@ dev_dependencies:
   json_serializable: ^6.7.1
 
 dependency_overrides:
+  wt_app_definition:
+    path: ../wt_app_definition
   wt_logging:
     path: ../wt_logging
