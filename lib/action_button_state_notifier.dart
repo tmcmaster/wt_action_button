@@ -4,7 +4,7 @@ import 'package:wt_action_button/model/action_button_status.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
-  static final _logger = logger(ActionButtonStateNotifier, level: Level.debug);
+  static final _logger = logger(ActionButtonStateNotifier, level: Level.info);
 
   final Ref _ref;
   final bool snackBar;
@@ -95,10 +95,7 @@ class ActionButtonStateNotifier extends StateNotifier<ActionButtonState> {
       active: false,
       errors: [
         ...state.errors,
-        if (stacktrace == null)
-          '${state.currentItem} : $message'
-        else
-          '${state.currentItem} : $message : $stacktrace',
+        if (stacktrace == null) '${state.currentItem} : $message' else '${state.currentItem} : $message : $stacktrace',
       ],
     );
   }

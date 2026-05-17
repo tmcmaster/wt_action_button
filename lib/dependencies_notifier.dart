@@ -3,7 +3,7 @@ import 'package:wt_action_button/dependency_checker.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 class DependenciesNotifier extends StateNotifier<bool> {
-  static final log = logger(DependenciesNotifier);
+  static final log = logger(DependenciesNotifier, level: Level.info);
   final List<DependencyChecker> dependencies;
   final Map<String, bool> available = {};
   final List<ProviderSubscription> removeListeners = [];
@@ -48,8 +48,7 @@ class DependenciesNotifier extends StateNotifier<bool> {
   }
 
   void _recheck() {
-    final newState =
-        available.values.fold<bool>(true, (prev, next) => prev && next);
+    final newState = available.values.fold<bool>(true, (prev, next) => prev && next);
     if (state != newState) state = newState;
   }
 }
